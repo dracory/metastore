@@ -14,7 +14,7 @@ require (
 	github.com/dracory/database v0.3.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
-	github.com/samber/lo v1.49.1 // indirect
-	github.com/spf13/cast v1.9.2 // indirect
-	golang.org/x/text v0.23.0 // indirect
+	github.com/samber/lo v1.51.0 // indirect
+	github.com/spf13/cast v1.10.0 // indirect
+	golang.org/x/text v0.29.0 // indirect
 )
