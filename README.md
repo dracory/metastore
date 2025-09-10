@@ -1,9 +1,9 @@
-# Meta Store <a href="https://gitpod.io/#https://github.com/gouniverse/metastore" style="float:right:"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod" loading="lazy"></a>
+# Meta Store <a href="https://gitpod.io/#https://github.com/dracory/metastore" style="float:right:"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod" loading="lazy"></a>
 
 
-[![Tests Status](https://github.com/gouniverse/metastore/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/gouniverse/metastore/actions/workflows/test.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/gouniverse/metastore)](https://goreportcard.com/report/github.com/gouniverse/metastore)
-[![PkgGoDev](https://pkg.go.dev/badge/github.com/gouniverse/metastore)](https://pkg.go.dev/github.com/gouniverse/metastore)
+[![Tests Status](https://github.com/dracory/metastore/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/dracory/metastore/actions/workflows/test.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/dracory/metastore)](https://goreportcard.com/report/github.com/dracory/metastore)
+[![PkgGoDev](https://pkg.go.dev/badge/github.com/dracory/metastore)](https://pkg.go.dev/github.com/dracory/metastore)
 
 Meta stores meta information for any object to a database table.
 
@@ -11,7 +11,7 @@ Store to database additional information to anything using metas (key - value) p
 
 ## Installation
 ```
-go get -u github.com/gouniverse/metastore
+go get -u github.com/dracory/metastore
 ```
 
 ## Table Schema ##

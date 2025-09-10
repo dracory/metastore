@@ -1,6 +1,6 @@
 package metastore
 
-import "github.com/gouniverse/sb"
+import "github.com/dracory/sb"
 
 // SqlCreateTable returns a SQL string for creating the setting table
 func (st *Store) SqlCreateTable() string {
