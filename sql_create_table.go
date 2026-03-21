@@ -4,7 +4,7 @@ import "github.com/dracory/sb"
 
 // SqlCreateTable returns a SQL string for creating the setting table
 func (st *Store) SqlCreateTable() string {
-	sql := sb.NewBuilder(sb.DatabaseDriverName(st.db)).
+	sql, err := sb.NewBuilder(sb.DatabaseDriverName(st.db)).
 		Table(st.metaTableName).
 		Column(sb.Column{
 			Name:       COLUMN_ID,
@@ -44,6 +44,10 @@ func (st *Store) SqlCreateTable() string {
 			Nullable: true,
 		}).
 		CreateIfNotExists()
+
+	if err != nil {
+		return ""
+	}
 
 	return sql
 }

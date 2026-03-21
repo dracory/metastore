@@ -333,7 +333,7 @@ func Test_Store_Update(t *testing.T) {
 	metaVal, errGet := s.Get(objType, objID, key, "")
 
 	if errGet != nil {
-		t.Fatal("Failure UPdate: Get", errSet.Error())
+		t.Fatal("Failure Update: Get", errGet.Error())
 	}
 
 	if metaVal != val {
@@ -343,13 +343,13 @@ func Test_Store_Update(t *testing.T) {
 	errSet2 := s.Set(objType, objID, key, val2)
 
 	if errSet2 != nil {
-		t.Fatal("Failure Update: Set2", errSet.Error())
+		t.Fatal("Failure Update: Set2", errSet2.Error())
 	}
 
 	metaVal2, errGet2 := s.Get(objType, objID, key, "")
 
 	if errGet2 != nil {
-		t.Fatal("Failure UPdate: Get2", errSet.Error())
+		t.Fatal("Failure Update: Get2", errGet2.Error())
 	}
 
 	if metaVal2 != val2 {
