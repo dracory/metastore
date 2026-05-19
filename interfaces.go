@@ -1,9 +1,17 @@
 package metastore
 
+import (
+	"context"
+	"database/sql"
+)
+
 // StoreInterface defines the interface for meta store operations
 type StoreInterface interface {
-	// AutoMigrate creates the necessary database tables
-	AutoMigrate() error
+	// MigrateDown drops the meta table
+	MigrateDown(ctx context.Context, tx ...*sql.Tx) error
+
+	// MigrateUp creates the meta table
+	MigrateUp(ctx context.Context, tx ...*sql.Tx) error
 
 	// EnableDebug enables or disables debug logging
 	EnableDebug(debug bool)
@@ -28,13 +36,13 @@ type StoreInterface interface {
 
 	// SqlCreateTable returns the SQL statement for creating the meta table
 	SqlCreateTable() string
-	
+
 	// GetMetaTableName returns the meta table name
 	GetMetaTableName() string
-	
+
 	// GetDB returns the database connection
 	GetDB() interface{}
-	
+
 	// IsAutomigrateEnabled returns whether automigrate is enabled
 	IsAutomigrateEnabled() bool
 }

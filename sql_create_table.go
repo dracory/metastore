@@ -51,3 +51,14 @@ func (st *Store) SqlCreateTable() string {
 
 	return sql
 }
+
+// SqlDropTable returns a SQL string for dropping the meta table
+func (st *Store) SqlDropTable() (string, error) {
+	sql, err := sb.NewBuilder(sb.DatabaseDriverName(st.db)).
+		Table(st.metaTableName).
+		Drop()
+	if err != nil {
+		return "", err
+	}
+	return sql, nil
+}

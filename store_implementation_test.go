@@ -1,6 +1,7 @@
 package metastore
 
 import (
+	"context"
 	"os"
 	"testing"
 
@@ -109,7 +110,7 @@ func Test_Store_AutoMigrate(t *testing.T) {
 		t.Fatal("Error at AutoMigrate", err.Error())
 	}
 
-	s.AutoMigrate()
+	s.MigrateUp(context.Background())
 
 	if s.GetMetaTableName() != "metas" {
 		t.Fatalf("Expected metaTableName [metas] received [%v]", s.GetMetaTableName())

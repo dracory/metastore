@@ -62,14 +62,19 @@ func NewStore(opts NewStoreOptions) (StoreInterface, error) {
 	}
 
 	if store.automigrateEnabled {
-		store.AutoMigrate()
+		store.MigrateUp(context.Background())
 	}
 
 	return store, nil
 }
 
-// AutoMigrate auto migrate
-func (st *Store) AutoMigrate() error {
+// MigrateUp creates the meta table
+func (st *Store) MigrateUp(ctx context.Context, tx ...*sql.Tx) error {
+	var txToUse *sql.Tx
+	if len(tx) > 0 {
+		txToUse = tx[0]
+	}
+
 	sql := st.SqlCreateTable()
 
 	if sql == "" {
@@ -80,10 +85,43 @@ func (st *Store) AutoMigrate() error {
 		log.Println(sql)
 	}
 
-	_, err := st.db.Exec(sql)
+	var errExec error
+	if txToUse != nil {
+		_, errExec = txToUse.ExecContext(ctx, sql)
+	} else {
+		_, errExec = st.db.ExecContext(ctx, sql)
+	}
+	if errExec != nil {
+		return errExec
+	}
 
+	return nil
+}
+
+// MigrateDown drops the meta table
+func (st *Store) MigrateDown(ctx context.Context, tx ...*sql.Tx) error {
+	var txToUse *sql.Tx
+	if len(tx) > 0 {
+		txToUse = tx[0]
+	}
+
+	sql, err := st.SqlDropTable()
 	if err != nil {
 		return err
+	}
+
+	if st.debugEnabled {
+		log.Println(sql)
+	}
+
+	var errExec error
+	if txToUse != nil {
+		_, errExec = txToUse.ExecContext(ctx, sql)
+	} else {
+		_, errExec = st.db.ExecContext(ctx, sql)
+	}
+	if errExec != nil {
+		return errExec
 	}
 
 	return nil
