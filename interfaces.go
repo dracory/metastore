@@ -34,14 +34,11 @@ type StoreInterface interface {
 	// SetJSON marshals and stores a JSON value for a given object type, object ID, and key
 	SetJSON(objectType string, objectID string, key string, value interface{}) error
 
-	// SqlCreateTable returns the SQL statement for creating the meta table
-	SqlCreateTable() string
-
 	// GetMetaTableName returns the meta table name
 	GetMetaTableName() string
 
 	// GetDB returns the database connection
-	GetDB() interface{}
+	GetDB() *sql.DB
 
 	// IsAutomigrateEnabled returns whether automigrate is enabled
 	IsAutomigrateEnabled() bool

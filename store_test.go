@@ -2,103 +2,22 @@ package metastore
 
 import (
 	"context"
-	"os"
+	"database/sql"
 	"testing"
 
-	"database/sql"
-
-	_ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 )
 
-func InitDB(filepath string) *sql.DB {
-	os.Remove(filepath) // remove database
-	dsn := filepath + "?parseTime=true"
-	db, err := sql.Open("sqlite3", dsn)
+func initDB() *sql.DB {
+	db, err := sql.Open("sqlite", ":memory:")
 	if err != nil {
 		panic(err)
 	}
-
 	return db
 }
 
-func InitStore() *Store {
-	db := InitDB("test_metastore_automigrate.db")
-	return &Store{
-		metaTableName:      "test_metastore_automigrate.db",
-		db:                 db,
-		automigrateEnabled: false,
-	}
-}
-
-// func TestWithAutoMigrate(t *testing.T) {
-// 	db := InitDB("test_metastore_automigrate.db")
-
-// 	s := Store{
-// 		metaTableName:      "log_with_automigrate_false",
-// 		db:                 db,
-// 		automigrateEnabled: false,
-// 	}
-
-// 	f := WithAutoMigrate(true)
-// 	f(&s)
-
-// 	if s.automigrateEnabled != true {
-// 		t.Fatalf("automigrateEnabled: Expected [true] received [%v]", s.automigrateEnabled)
-// 	}
-
-// 	s = Store{
-// 		metaTableName:      "log_with_automigrate_true",
-// 		db:                 db,
-// 		automigrateEnabled: true,
-// 	}
-
-// 	f = WithAutoMigrate(false)
-// 	f(&s)
-
-// 	if s.automigrateEnabled == true {
-// 		t.Fatalf("automigrateEnabled: Expected [true] received [%v]", s.automigrateEnabled)
-// 	}
-// }
-
-// func TestWithDb(t *testing.T) {
-// 	s := Store{
-// 		metaTableName:      "log_with_automigrate_true",
-// 		db:                 nil,
-// 		automigrateEnabled: true,
-// 	}
-
-// 	db := InitDB("test")
-// 	f := WithDb(db)
-// 	f(&s)
-
-// 	if s.db == nil {
-// 		t.Fatalf("DB: Expected Initialized DB, received [%v]", s.db)
-// 	}
-
-// }
-
-// func TestWithTableName(t *testing.T) {
-// 	s := Store{
-// 		metaTableName:      "",
-// 		db:                 nil,
-// 		automigrateEnabled: false,
-// 	}
-// 	table_name := "Table1"
-// 	f := WithTableName(table_name)
-// 	f(&s)
-// 	if s.metaTableName != table_name {
-// 		t.Fatalf("Expected logTableName [%v], received [%v]", table_name, s.metaTableName)
-// 	}
-// 	table_name = "Table2"
-// 	f = WithTableName(table_name)
-// 	f(&s)
-// 	if s.metaTableName != table_name {
-// 		t.Fatalf("Expected logTableName [%v], received [%v]", table_name, s.metaTableName)
-// 	}
-// }
-
 func Test_Store_AutoMigrate(t *testing.T) {
-	db := InitDB("test_metastore_automigrate.db")
+	db := initDB()
 
 	s, err := NewStore(NewStoreOptions{
 		DB:                 db,
@@ -124,7 +43,7 @@ func Test_Store_AutoMigrate(t *testing.T) {
 }
 
 func Test_Store_Set(t *testing.T) {
-	db := InitDB("test_metastore_set.db")
+	db := initDB()
 	s, err := NewStore(NewStoreOptions{
 		DB:                 db,
 		MetaTableName:      "metas",
@@ -148,7 +67,7 @@ func Test_Store_Set(t *testing.T) {
 }
 
 func Test_Store_SetJSON(t *testing.T) {
-	db := InitDB("test_metastore_set_json.db")
+	db := initDB()
 	s, err := NewStore(NewStoreOptions{
 		DB:                 db,
 		MetaTableName:      "metas",
@@ -171,7 +90,7 @@ func Test_Store_SetJSON(t *testing.T) {
 }
 
 func Test_Store_Remove(t *testing.T) {
-	db := InitDB("test_metastore_remove.db")
+	db := initDB()
 	s, err := NewStore(NewStoreOptions{
 		DB:                 db,
 		MetaTableName:      "metas",
@@ -210,7 +129,7 @@ func Test_Store_Remove(t *testing.T) {
 }
 
 func Test_Store_Get(t *testing.T) {
-	db := InitDB("test_metastore_get.db")
+	db := initDB()
 	s, err := NewStore(NewStoreOptions{
 		DB:                 db,
 		MetaTableName:      "metas",
@@ -244,7 +163,7 @@ func Test_Store_Get(t *testing.T) {
 }
 
 func Test_Store_FindByKey(t *testing.T) {
-	db := InitDB("test_metastore_findbykey.db")
+	db := initDB()
 	s, err := NewStore(NewStoreOptions{
 		DB:                 db,
 		MetaTableName:      "metas",
@@ -276,7 +195,7 @@ func Test_Store_FindByKey(t *testing.T) {
 	}
 }
 func Test_Store_GetJSON(t *testing.T) {
-	db := InitDB("test_metastore_getjson.db")
+	db := initDB()
 	s, err := NewStore(NewStoreOptions{
 		DB:                 db,
 		MetaTableName:      "metas",
@@ -308,7 +227,7 @@ func Test_Store_GetJSON(t *testing.T) {
 }
 
 func Test_Store_Update(t *testing.T) {
-	db := InitDB("test_metastore_update.db")
+	db := initDB()
 	s, err := NewStore(NewStoreOptions{
 		DB:                 db,
 		MetaTableName:      "metas",
@@ -354,6 +273,6 @@ func Test_Store_Update(t *testing.T) {
 	}
 
 	if metaVal2 != val2 {
-		t.Fatal("Failure Update: Values 2 do not match", metaVal2, val2)
+		t.Fatal("Failure Update: Values do not match", metaVal2, val2)
 	}
 }
