@@ -1,4 +1,4 @@
-# Meta Store <a href="https://gitpod.io/#https://github.com/dracory/metastore" style="float:right:"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open in Gitpod" loading="lazy"></a>
+# Meta Store
 
 
 [![Tests Status](https://github.com/dracory/metastore/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/dracory/metastore/actions/workflows/test.yml)
