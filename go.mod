@@ -3,7 +3,7 @@ module github.com/dracory/metastore
 go 1.26.3
 
 require (
-	github.com/dracory/neat v0.23.0
+	github.com/dracory/neat v0.26.0
 	github.com/dracory/uid v1.9.0
 	modernc.org/sqlite v1.52.0
 )
