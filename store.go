@@ -8,10 +8,10 @@ import (
 	"log/slog"
 	"os"
 	"time"
+	"uuid"
 
 	"github.com/dracory/neat"
 	contractsschema "github.com/dracory/neat/contracts/database/schema"
-	"github.com/dracory/uid"
 )
 
 // Store defines a meta store
@@ -211,7 +211,7 @@ func (st *Store) Set(objectType string, objectID string, key string, value strin
 
 	if meta == nil {
 		row := map[string]any{
-			COLUMN_ID:          uid.HumanUid(),
+			COLUMN_ID:          uuid.NewV7().String(),
 			COLUMN_OBJECT_TYPE: objectType,
 			COLUMN_OBJECT_ID:   objectID,
 			COLUMN_META_KEY:    key,
